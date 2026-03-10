@@ -1,0 +1,20 @@
+# Cisco Catalyst SD-WAN MCP Server
+# Run: docker-compose up -d
+# Configure: Set VMANAGE_* variables in .env or below
+
+services:
+  catalyst-sdwan-mcp:
+    build: .
+    image: catalyst-sdwan-mcp:latest
+    container_name: catalyst-sdwan-mcp
+    environment:
+      - VMANAGE_HOST=${VMANAGE_HOST}
+      - VMANAGE_PORT=${VMANAGE_PORT:-443}
+      - VMANAGE_USERNAME=${VMANAGE_USERNAME}
+      - VMANAGE_PASSWORD=${VMANAGE_PASSWORD}
+      - VMANAGE_USE_JWT=${VMANAGE_USE_JWT:-true}
+    # MCP stdio: no ports needed when used with Cursor MCP integration
+    # If you need HTTP transport, add a wrapper and expose a port
+    stdin_open: true
+    tty: true
+    restart: unless-stopped

@@ -1,0 +1,9 @@
+node_modules
+.env
+.env.*
+!.env.example
+build
+*.log
+.git
+.gitignore
+README.md
