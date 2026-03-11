@@ -181,3 +181,5 @@ All API requests use HTTPS. Self-signed certificates (common in lab environments
 ## License
 
 MIT
+##
+[![MCP Badge](https://lobehub.com/badge/mcp/sdntechforum-catalyst-sdwan-mcp)](https://lobehub.com/mcp/sdntechforum-catalyst-sdwan-mcp)
