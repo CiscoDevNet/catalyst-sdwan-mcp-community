@@ -1,5 +1,9 @@
+/**
+ * Copyright 2026 Cisco Systems, Inc. and its affiliates
+ * * SPDX-License-Identifier: Apache-2.0
+ */
+
 /*
- * MIT License
  * Cisco Catalyst SD-WAN MCP Server
  * Exposes vManage API capabilities as MCP tools
  */
