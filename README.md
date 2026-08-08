@@ -26,6 +26,25 @@ Model Context Protocol (MCP) server for **Cisco Catalyst SD-WAN Manager (vManage
 | `VMANAGE_PASSWORD` | Yes | - | vManage password |
 | `VMANAGE_PORT` | No | 443 | vManage HTTPS port |
 | `VMANAGE_USE_JWT` | No | true | Use JWT auth (set false for session-based) |
+| `RESPONSE_FORMAT` | No | json | Tool result wire format: `json` or `gcf` (see below) |
+
+### Response Encoding (GCF)
+
+Tool results are returned as JSON by default. Setting `RESPONSE_FORMAT=gcf`
+encodes each result as a [Graph Compact Format](https://gcformat.com) generic
+wire instead. vManage `/dataservice` endpoints return uniform record collections
+under a `data` array (devices, control connections, OMP routes, BGP neighbors,
+interfaces); GCF factors their repeated field names into a single header, which
+uses fewer tokens when the response crosses the LLM boundary.
+
+The encoding is opt-in and lossless: decoding the wire reproduces the response
+exactly, and if encoding ever fails the tool falls back to JSON so a fetched
+result is never lost. It is applied at one seam, so it covers every tool. On
+schema-derived vManage responses it reduced result size versus JSON by a mean of
+roughly 45 percent across a range of LLM tokenizers; verbose vManage field names
+(`vdevice-host-name`, `certificate-validity`) make the header-factoring pay off,
+and larger result sets save more. Adds one zero-dependency package
+(`@blackwell-systems/gcf`).
 
 ### Cursor MCP Configuration
 
