@@ -17,6 +17,7 @@ import {
 } from '@modelcontextprotocol/sdk/types.js';
 import { VManageApiService } from './services/vmanageApi.js';
 import { loadConfig } from './utils/config.js';
+import { formatToolResult } from './response_format.js';
 
 export class CatalystSdwanMCPServer {
   private server: Server;
@@ -51,7 +52,7 @@ export class CatalystSdwanMCPServer {
       try {
         const result = await this.handleToolCall(name, args || {});
         return {
-          content: [{ type: 'text', text: JSON.stringify(result, null, 2) }],
+          content: [{ type: 'text', text: formatToolResult(result) }],
         };
       } catch (error: unknown) {
         const message = error instanceof Error ? error.message : String(error);
